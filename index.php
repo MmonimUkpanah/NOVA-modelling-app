@@ -9,10 +9,72 @@
     <link rel="icon" href="./assets/images/O.png">
 </head>
 <body data-simplebar>
-    <?php
+<?php
     
 
+    // $serverName = "localhost";
+    // $userName = "root";
+    // $password = "";
+    // $dbName = "response_data";
+
+    // $connection = mysqli_connect($serverName,$userName,$password,$dbName);
+
+    // if(!$connection){
+    //     echo "Unable to connect db.";
+    // }
+    require('connect.php');
+
+    $message = "Your email has been saved successfully";
+
+    
+        if(isset($_POST['registerBtn'])){
+           $email = ($_POST['email']); //sha1, md5, salt are different hash functions used to hide passwords
+        
+
+
+
+           $result = mysqli_query($connection, "SELECT * FROM email_response WHERE email = '$email'") or
+           exit(mysqli_error($connection)); // check for duplicates
+           $num_rows = mysqli_num_rows($result); // number of rows where duplicates exist
+
+           if(($num_rows) > 0){
+               echo "E-mail already exists.";
+               exit;
+           }else{
+                $insertQuery = "INSERT INTO `email_response` 
+                ( email, created_at) 
+                VALUES 
+                ( '$email', now())";
+                
+                
+           }
+     
+        
+
+        if(empty($email)){
+            echo "Email is required";
+
+        }else{
+            $insertQuery = mysqli_query($connection, "INSERT INTO `email_response` 
+            ( email, created_at) 
+            VALUES 
+            (  '$email', now())"
+            );
+
+            if($insertQuery){
+                echo "<script type='text/javascript'>alert('$message'); </script>";
+                // header('location:welcome.php'); header function is used to navigate to another webpage
+            }else{
+                echo mysqli_error($connection)."Oops! something went wrong";
+            }
+
+            }
+        }
+
 ?>
+
+        
+
 
 
     <div class="slider"></div>
@@ -30,10 +92,10 @@
             </div>
             <div class="links">
                 <ul>
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.php">Home</a></li>
                     <li><a href="nova-models-master/index.html">Models</a></li>
                     <li><a href="faqpage-master/index.html">FAQ</a></li>
-                    <li><a href="hng-model-master/index.html">Contact</a></li>
+                    <li><a href="hng-model-master/index.php">Contact</a></li>
                 </ul>
                 <div class="nav-i-s">
                     <a href="#"> <img src="./assets/images/insta-pink.png" alt=""></a>
@@ -218,7 +280,7 @@
             <h1 class="drop7">Do you want to be a super <span>model</span> ?</h1>
             <p class="drop7">Uniquely communicate error-free platforms before functional meta-services. Monotonectally emerging<br> platforms before low-risk high-yield growth strategiesred niches.</p>
             <p class="drop7">Intrinsicly facilitate client-based channels for.</p>
-            <form action="connect.php" method="POST">
+            <form action="index.php" method="POST">
                  <input class="drop7 twenty1" type="email" placeholder="Email address" name="email">
                  <input  type="submit" name="registerBtn" value="submit" class="drop7 twenty" > 
             </form>

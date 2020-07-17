@@ -9,6 +9,74 @@
     <link rel="icon" href="./images/O.png">
 </head>
 <body >
+<?php
+
+    // $serverName = "localhost";
+    // $userName = "root";
+    // $password = "";
+    // $dbName = "response_data";
+
+    // $connection = mysqli_connect($serverName,$userName,$password,$dbName);
+
+    // if(!$connection){
+    //     echo "Unable to connect db.";
+    // }
+    require('connected.php');
+
+    $response = "Your message has been stored successfully";
+
+        if(isset($_POST['registerBtn'])){
+           $name = $_POST['name'];
+           $email = ($_POST['email']); //sha1, md5, salt are different hash functions used to hide passwords
+           $message = $_POST['message'];
+
+
+
+           $result = mysqli_query($connection, "SELECT * FROM response_capture WHERE email = '$email'") or
+           exit(mysqli_error($connection)); // check for duplicates
+           $num_rows = mysqli_num_rows($result); // number of rows where duplicates exist
+
+           if(($num_rows) > 0){
+               echo "E-mail already exists.";
+               exit;
+           }else{
+                $insertQuery = "INSERT INTO `response_capture` 
+                ( name, email, message, time) 
+                VALUES 
+                ( '$name', '$email', '$message', now())";
+                
+                
+           }
+     
+        
+
+        if(empty($name) || empty($email) || empty($message) ){
+            echo "All fields are required";
+
+        }else{
+            $insertQuery = mysqli_query($connection, "INSERT INTO `response_capture` 
+            ( name, email, message, time) 
+            VALUES 
+            (  '$name', '$email', '$message', now())"
+            );
+            
+            
+
+
+            if($insertQuery){
+                echo "<script type='text/javascript'>alert('$response'); </script>";
+                // header('location:welcome.php'); header function is used to navigate to another webpage
+            }else{
+                echo mysqli_error($connection)."Oops! something went wrong";
+            }
+            
+
+            }
+        }
+
+    
+
+?>
 
     
     <header>
@@ -23,10 +91,10 @@
             </div>
             <div class="links">
                 <ul>
-                <li><a href="../index.html">Home</a></li>
+                <li><a href="../index.php">Home</a></li>
                 <li><a href="../nova-models-master/index.html">Models</a></li>
                 <li><a href="../faqpage-master/index.html">FAQ</a></li>
-                <li><a href="index.html">Contact</a></li>
+                <li><a href="index.php">Contact</a></li>
                 </ul>
                 <div class="nav-i-s">
                     <a href="#"> <img src="./images/insta-pink.png" alt=""></a>
@@ -69,7 +137,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="two7">
-                                <form action="connected.php" method="POST">
+                                <form action="index.php" method="POST">
                                         <label for=""><strong>Name</strong>  </label> <br>
                                         <input type="text" name="name" class="two8" ><br>
                                         <label for=""><strong>Email</strong> </label><br>
