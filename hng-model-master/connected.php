@@ -1,5 +1,5 @@
 <?php
-    $serverName = "85.10.205.173:3306";
+    $serverName = "db4free.net";
     $userName = "mmonimukpanah";
     $password = "fanatica6442";
     $dbName = "response_data";
