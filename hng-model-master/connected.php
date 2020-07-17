@@ -39,9 +39,9 @@
                exit;
            }else{
                 $insertQuery = "INSERT INTO `response_capture` 
-                (id, name, email, message, time) 
+                ( name, email, message, time) 
                 VALUES 
-                ('', '$name', '$email', '$message', now())";
+                ( '$name', '$email', '$message', now())";
                 
                 
            }
@@ -53,9 +53,9 @@
 
         }else{
             $insertQuery = mysqli_query($connection, "INSERT INTO `response_capture` 
-            (id, name, email, message, time) 
+            ( name, email, message, time) 
             VALUES 
-            ('',  '$name', '$email', '$message', now())"
+            (  '$name', '$email', '$message', now())"
             );
             
             

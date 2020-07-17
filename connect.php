@@ -39,9 +39,9 @@
                exit;
            }else{
                 $insertQuery = "INSERT INTO `email_response` 
-                (id, email, created_at) 
+                ( email, created_at) 
                 VALUES 
-                ('', '$email', now())";
+                ( '$email', now())";
                 
                 
            }
@@ -53,9 +53,9 @@
 
         }else{
             $insertQuery = mysqli_query($connection, "INSERT INTO `email_response` 
-            (id, email, created_at) 
+            ( email, created_at) 
             VALUES 
-            ('',  '$email', now())"
+            (  '$email', now())"
             );
 
             if($insertQuery){
